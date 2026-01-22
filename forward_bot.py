@@ -15,8 +15,7 @@ load_dotenv()
 API_ID = int(os.getenv("API_ID"))
 API_HASH = os.getenv("API_HASH")
 
-# --- PARSE SOURCE CHANNELS (Updated Logic) ---
-# Supports comma-separated list like "@channel1,@channel2"
+# --- PARSE SOURCE CHANNELS ---
 source_env = os.getenv("SOURCE_CHANNEL")
 if source_env:
     SOURCE_CHANNELS = []
@@ -43,7 +42,6 @@ else:
     logger.error("No DESTINATION_CHANNELS found in environment variables!")
     exit(1)
 
-# State file is now a JSON to track multiple channels
 STATE_FILE = "channel_state.json"
 
 def load_state():
@@ -62,39 +60,38 @@ def save_state(state_data):
 async def main():
     async with TelegramClient('my_session', API_ID, API_HASH) as client:
         
-        # Load the saved IDs for all channels
         state = load_state()
-        
-        logger.info(f"Targeting {len(SOURCE_CHANNELS)} Source Channels -> {len(DESTINATION_CHANNELS)} Destination Channels")
+        logger.info(f"Targeting {len(SOURCE_CHANNELS)} Source -> {len(DESTINATION_CHANNELS)} Destination Channels")
 
-        # --- OUTER LOOP: Process each Source Channel one by one ---
         for source_channel in SOURCE_CHANNELS:
             try:
                 logger.info(f"--- Checking Source: {source_channel} ---")
-                
-                # Get the last ID for THIS specific channel
-                # Using the channel name/link as the key
                 last_id = state.get(source_channel, 0)
                 logger.info(f"Resuming {source_channel} from Message ID: {last_id}")
 
-                # Loop through messages for this specific source
                 async for message in client.iter_messages(source_channel, min_id=last_id, reverse=True, limit=50):
                     
-                    # Filter: Must be Audio/Video File & Duration > 1 Hour (3600s)
+                    # --- UPDATED FILTER LOGIC (AUDIO ONLY) ---
                     is_valid_media = False
-                    if message.file and message.file.duration:
-                        if message.file.duration > 3600:
-                            is_valid_media = True
-
-                    if is_valid_media:
-                        logger.info(f"[{source_channel}] Found media! ID: {message.id} ({message.file.duration}s)")
+                    
+                    if message.file:
+                        # 1. Check MIME type (Must start with 'audio/')
+                        # This excludes 'video/mp4', 'image/jpeg', etc.
+                        mime_type = message.file.mime_type or ""
                         
-                        # Loop through EACH destination channel
+                        if mime_type.startswith("audio/"):
+                            # 2. Check Duration > 1 Hour (3600 seconds)
+                            if message.file.duration and message.file.duration > 3600:
+                                is_valid_media = True
+                        
+                    if is_valid_media:
+                        logger.info(f"[{source_channel}] Found AUDIO! ID: {message.id} ({message.file.duration}s)")
+                        
                         for dest_id in DESTINATION_CHANNELS:
                             try:
                                 await client.forward_messages(dest_id, message)
                                 logger.info(f"--> Forwarded to {dest_id}")
-                                await asyncio.sleep(2) # Safety delay
+                                await asyncio.sleep(2)
                             except FloodWaitError as e:
                                 logger.warning(f"FloodWait! Sleeping {e.seconds}s")
                                 await asyncio.sleep(e.seconds + 5)
@@ -102,24 +99,21 @@ async def main():
                             except Exception as e:
                                 logger.error(f"Failed to forward to {dest_id}: {e}")
 
-                        # Update State for THIS channel immediately
                         state[source_channel] = message.id
                         save_state(state)
-                        
-                        await asyncio.sleep(10) # Anti-spam delay
+                        await asyncio.sleep(10)
                     else:
-                        # Even if skipped, update ID so we don't check again
+                        # Skip (Video, Text, Short Audio) but update ID
                         state[source_channel] = message.id
                         save_state(state)
 
             except Exception as e:
                 logger.error(f"Error processing source channel {source_channel}: {e}")
-                continue # Skip to next source channel if one fails
+                continue
 
-            # Pause briefly before switching to the next source channel
             await asyncio.sleep(2)
 
-        logger.info("Batch processing for all channels complete.")
+        logger.info("Batch processing complete.")
 
 if __name__ == '__main__':
     loop = asyncio.get_event_loop()
