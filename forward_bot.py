@@ -15,10 +15,18 @@ API_ID = int(os.getenv("API_ID"))
 API_HASH = os.getenv("API_HASH")
 SOURCE_CHANNEL = os.getenv("SOURCE_CHANNEL")
 
-# Parse multiple channels from string (e.g., "-100111,-100222") to list of integers
+# Parse multiple channels from string (e.g., "-100111,-100222" or "@channel1,@channel2")
 dest_env = os.getenv("DESTINATION_CHANNELS")
 if dest_env:
-    DESTINATION_CHANNELS = [int(x.strip()) for x in dest_env.split(',') if x.strip()]
+    DESTINATION_CHANNELS = []
+    for x in dest_env.split(','):
+        x = x.strip()
+        if x:
+            # Support both numeric IDs and usernames
+            try:
+                DESTINATION_CHANNELS.append(int(x))
+            except ValueError:
+                DESTINATION_CHANNELS.append(x)  # Keep as string (username)
 else:
     logger.error("No DESTINATION_CHANNELS found in environment variables!")
     exit(1)

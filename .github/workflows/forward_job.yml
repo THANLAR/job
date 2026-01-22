@@ -21,7 +21,7 @@ jobs:
         env:
           API_ID: ${{ secrets.API_ID }}
           API_HASH: ${{ secrets.API_HASH }}
-          SOURCE_CHANNEL: '@myaudioforwarder'
-          DESTINATION_CHANNELS: '-1001538054436' 
+          SOURCE_CHANNEL: '@Ashinandarmarlrbiwitha'
+          DESTINATION_CHANNELS: '@myaudioforwarder'
         run: |
           python forward_bot.py
