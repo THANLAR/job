@@ -2,7 +2,7 @@ name: Audio Forwarder Bot
 
 on:
   schedule:
-    - cron: '1 * * * *'  # Runs every hour (ချိန်ညှိနိုင်ပါတယ်)
+    - cron: '0 * * * *'  # Runs every hour (ချိန်ညှိနိုင်ပါတယ်)
   workflow_dispatch:      # Manual trigger ခလုတ်ပါ ထည့်ထားပါတယ်
 
 jobs:
