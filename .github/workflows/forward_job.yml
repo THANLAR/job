@@ -1,0 +1,27 @@
+name: Audio Forwarder Bot
+
+on:
+  schedule:
+    - cron: '1 * * * *'  # Runs every hour (ချိန်ညှိနိုင်ပါတယ်)
+  workflow_dispatch:      # Manual trigger ခလုတ်ပါ ထည့်ထားပါတယ်
+
+jobs:
+  forward-audio:
+    runs-on: self-hosted
+    
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Install Requirements
+        run: |
+          pip install -r requirements.txt
+
+      - name: Run Forwarder Script
+        env:
+          API_ID: ${{ secrets.API_ID }}
+          API_HASH: ${{ secrets.API_HASH }}
+          SOURCE_CHANNEL: '@myaudioforwarder'
+          DESTINATION_CHANNELS: '-1001538054436' 
+        run: |
+          python forward_bot.py
