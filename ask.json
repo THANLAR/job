@@ -1,1 +1,41 @@
-
+{
+  "api": {
+    "base_urls": [
+      {
+        "id": "primary",
+        "url": "https://ask.asktech.online",
+        "priority": 1,
+        "enabled": true
+      },
+      {
+        "id": "fallback_1",
+        "url": "https://ask-vpn-api.small-sky-2ddb.workers.dev",
+        "priority": 2,
+        "enabled": true
+      },
+      {
+        "id": "fallback_2",
+        "url": "https://ask-vpn-api.small-sky-2ddb.workers.dev",
+        "priority": 3,
+        "enabled": true
+      },
+      {
+        "id": "fallback_3",
+        "url": "https://ask-config.thanlar.com",
+        "priority": 4,
+        "enabled": true
+      },
+      {
+        "id": "fallback_4",
+        "url": "https://ask-vpn-api.thanlar.workers.dev",
+        "priority": 5,
+        "enabled": true
+      },{
+        "id": "fallback_5",
+        "url": "https://ask.thanlar.com",
+        "priority": 6,
+        "enabled": true
+      },
+    ]
+  },
+}
