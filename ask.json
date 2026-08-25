@@ -30,7 +30,8 @@
         "url": "https://ask-vpn-api.thanlar.workers.dev",
         "priority": 5,
         "enabled": true
-      },{
+      },
+      {
         "id": "fallback_5",
         "url": "https://ask.thanlar.com",
         "priority": 6,
