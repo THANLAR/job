@@ -8,12 +8,6 @@
         "enabled": true
       },
       {
-        "id": "fallback_1",
-        "url": "https://ask.asktech.online",
-        "priority": 2,
-        "enabled": true
-      },
-      {
         "id": "fallback_2",
         "url": "https://ask-vpn-api.small-sky-2ddb.workers.dev",
         "priority": 3,
@@ -36,6 +30,12 @@
         "url": "https://ask.thanlar.com",
         "priority": 6,
         "enabled": true
+      },
+      {
+        "id": "upstream_direct_disabled",
+        "url": "https://ask.asktech.online",
+        "priority": 999,
+        "enabled": false
       }
     ]
   }
