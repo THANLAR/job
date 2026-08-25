@@ -21,7 +21,7 @@
       },
       {
         "id": "fallback_3",
-        "url": "https://ask-config.thanlar.com",
+        "url": "https://mm.thanlar.com",
         "priority": 4,
         "enabled": true
       },
