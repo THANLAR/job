@@ -3,7 +3,7 @@
     "base_urls": [
       {
         "id": "primary",
-        "url": "https://myanmar.thanlar.com",
+        "url": "https://ask-config.thanlar.com",
         "priority": 1,
         "enabled": true
       },
