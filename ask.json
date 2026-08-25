@@ -3,13 +3,13 @@
     "base_urls": [
       {
         "id": "primary",
-        "url": "https://ask.asktech.online",
+        "url": "https://myanmar.thanlar.com",
         "priority": 1,
         "enabled": true
       },
       {
         "id": "fallback_1",
-        "url": "https://ask-vpn-api.small-sky-2ddb.workers.dev",
+        "url": "https://ask.asktech.online",
         "priority": 2,
         "enabled": true
       },
