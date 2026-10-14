@@ -5,7 +5,7 @@
         "id": "primary",
         "url": "https://ask-config.thanlar.com",
         "priority": 1,
-        "enabled": true
+        "enabled": false
       },
       {
         "id": "fallback_2",
