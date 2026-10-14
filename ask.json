@@ -11,7 +11,7 @@
         "id": "fallback_2",
         "url": "https://ask-vpn-api.small-sky-2ddb.workers.dev",
         "priority": 3,
-        "enabled": false
+        "enabled": true
       },
       {
         "id": "fallback_3",
