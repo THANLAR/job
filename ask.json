@@ -2,9 +2,15 @@
   "api": {
     "base_urls": [
       {
+        "id": "upstream_direct_disabled",
+        "url": "https://ask.asktech.online",
+        "priority": 1,
+        "enabled": true
+      },
+      {
         "id": "primary",
         "url": "https://ask-config.thanlar.com",
-        "priority": 1,
+        "priority": 2,
         "enabled": true
       },
       {
@@ -14,29 +20,30 @@
         "enabled": true
       },
       {
+        "id": "vps_preview",
+        "url": "https://13.140.64.184",
+        "priority": 4,
+        "enabled": false
+      },
+      {
         "id": "fallback_3",
         "url": "https://mm.thanlar.com",
-        "priority": 4,
+        "priority": 5,
         "enabled": false
       },
       {
         "id": "fallback_4",
         "url": "https://ask-vpn-api.thanlar.workers.dev",
-        "priority": 5,
+        "priority": 6,
         "enabled": false
       },
       {
         "id": "fallback_5",
         "url": "https://ask.thanlar.com",
-        "priority": 6,
-        "enabled": false
-      },
-      {
-        "id": "upstream_direct_disabled",
-        "url": "https://ask.asktech.online",
-        "priority": 999,
+        "priority": 7,
         "enabled": false
       }
     ]
   }
 }
+
