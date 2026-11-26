@@ -2,13 +2,13 @@
   "api": {
     "base_urls": [
       {
-        "id": "vps_preview",
+        "id": "primary",
         "url": "https://13.140.64.184",
         "priority": 1,
         "enabled": true
       },
       {
-        "id": "primary",
+        "id": "fallback_1",
         "url": "https://ask-config.thanlar.com",
         "priority": 2,
         "enabled": true
